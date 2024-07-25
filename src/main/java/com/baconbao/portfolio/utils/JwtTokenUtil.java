@@ -2,6 +2,7 @@ package com.baconbao.portfolio.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import java.util.function.Function;
 
 @Component
+@Slf4j
 public class JwtTokenUtil {
 
     private SecretKey Key;
@@ -25,6 +27,7 @@ public class JwtTokenUtil {
     }
 
     public String generateToken(UserDetails userDetails){
+
         return Jwts.builder()
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
@@ -43,6 +46,7 @@ public class JwtTokenUtil {
     }
 
     public String extractUsername(String token){
+        log.info("ex");
         return extractClaims(token, Claims::getSubject);
     }
     private <T> T extractClaims(String token, Function<Claims, T> claimsTFunction){
