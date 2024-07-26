@@ -5,14 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@Data
-public class UserDTO {
+public class ContactDTO {
     private Integer id;
-    private String name;
+    private String address;
+    private String phone;
     private String email;
-    private String password;
-    private ProfileDTO profileDTO;
 }
