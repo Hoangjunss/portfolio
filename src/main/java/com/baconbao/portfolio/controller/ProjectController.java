@@ -17,4 +17,8 @@ public class ProjectController {
     public ResponseEntity<ProjectDTO> save(@RequestBody ProjectDTO projectDTO){
         return ResponseEntity.ok(projectService.saveProject(projectDTO));
     }
+    @PostMapping("/update")
+    public ResponseEntity<ProjectDTO> update(@RequestBody ProjectDTO projectDTO){
+        return ResponseEntity.ok(projectService.updateProject(projectDTO));
+    }
 }

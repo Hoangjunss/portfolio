@@ -2,6 +2,7 @@ package com.baconbao.portfolio.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,5 +23,9 @@ public class Project {
     private String title;
     private String description;
     private LocalDateTime createAt;
+    @PrePersist
+    protected void onCreate() {
+        createAt = LocalDateTime.now();
 
+    }
 }
