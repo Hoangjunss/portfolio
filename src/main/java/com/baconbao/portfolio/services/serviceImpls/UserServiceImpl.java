@@ -49,8 +49,7 @@ public class UserServiceImpl implements UserService
         }
         return null;
     }
-    private UserDTO convertToDTO(User user) {
-
+    protected UserDTO convertToDTO(User user) {
          return modelMapper.map(user, UserDTO.class);
     }
 }
