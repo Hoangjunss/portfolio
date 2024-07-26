@@ -24,7 +24,6 @@ public class ProjectServiceImpl implements ProjectService {
                 .id(getGenerationId())
                 .title(projectDTO.getTitle())
                 .description(projectDTO.getDescription())
-                .createAt(LocalDateTime.now())
                 .build();
         return projectRepository.save(project);
     }
@@ -42,6 +41,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectDTO updateProject(ProjectDTO projectDTO) {
+        projectDTO.setCreateAt(findById(projectDTO).getCreateAt());
          Project project=projectRepository.save(convertToModel(projectDTO));
 
         return convertToDTO(project);
