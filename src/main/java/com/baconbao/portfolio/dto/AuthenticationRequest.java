@@ -15,5 +15,4 @@ public class AuthenticationRequest {
     private String role;
     private String token;
     private String password;
-
 }

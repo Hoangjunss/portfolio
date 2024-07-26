@@ -1,4 +1,4 @@
-package com.baconbao.portfolio.service;
+package com.baconbao.portfolio.services;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;

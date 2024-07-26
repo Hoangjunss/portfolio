@@ -2,7 +2,7 @@ package com.baconbao.portfolio.controller;
 
 
 import com.baconbao.portfolio.dto.AuthenticationResponse;
-import com.baconbao.portfolio.service.AuthService;
+import com.baconbao.portfolio.services.AuthService;
 import com.baconbao.portfolio.dto.AuthenticationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
