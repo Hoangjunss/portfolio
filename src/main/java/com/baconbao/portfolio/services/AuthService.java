@@ -30,6 +30,7 @@ public class AuthService {
     public AuthenticationResponse signUp(AuthenticationRequest registrationRequest){
             User users = User.builder()
                     .id(getGenerationId())
+                    .name(registrationRequest.getName())
                     .email(registrationRequest.getEmail())
                     .password(passwordEncoder.encode(registrationRequest.getPassword()))
                     .role(Role.valueOf(registrationRequest.getRole()))

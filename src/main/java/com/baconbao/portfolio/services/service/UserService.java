@@ -8,5 +8,5 @@ import java.util.List;
 public interface UserService {
     User getUserByEmail(String email);
     User getUserById(Integer id);
-    User getCurrentUser();
+    UserDTO getCurrentUser();
 }
