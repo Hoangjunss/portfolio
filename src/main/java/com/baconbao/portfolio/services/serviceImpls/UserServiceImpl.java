@@ -2,6 +2,7 @@ package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.UserDTO;
 import com.baconbao.portfolio.model.User;
+import com.baconbao.portfolio.repository.UserRepository;
 import com.baconbao.portfolio.services.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -11,20 +12,36 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-@Service
+import java.util.Optional;
 
+@Service
+@Slf4j
 
 public class UserServiceImpl implements UserService
 {
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private UserRepository userRepository;
 
-    public User getUserByEmail(String email) {
-        return null;
+    public UserDTO getUserByEmail(String email) {
+        log.info("Get user by email: {}", email);
+        Optional<User> user = userRepository.findByEmail(email);
+        UserDTO userDTO = UserDTO.builder()
+                .name(user.get().getName())
+                .email(user.get().getEmail())
+                .build();
+        return userDTO;
     }
 
-    public User getUserById(Integer id) {
-        return null;
+    public UserDTO getUserById(Integer id) {
+        log.info("Get user by id: {}", id);
+        Optional<User> user = userRepository.findById(id);
+        UserDTO userDTO = UserDTO.builder()
+                .name(user.get().getName())
+                .email(user.get().getEmail())
+                .build();
+        return userDTO;
     }
 
 
