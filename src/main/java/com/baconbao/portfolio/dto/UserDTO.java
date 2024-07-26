@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class UserDTO {
+    private Integer id;
     private String name;
     private String email;
 }
