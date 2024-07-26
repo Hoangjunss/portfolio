@@ -1,9 +1,6 @@
 package com.baconbao.portfolio.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,4 +25,9 @@ public class Project {
         createAt = LocalDateTime.now();
 
     }
+    private String url;
+
+    @OneToOne
+    @JoinColumn(name = "idImage", referencedColumnName = "id")
+    private Image image;
 }

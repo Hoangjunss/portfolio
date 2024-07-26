@@ -1,9 +1,6 @@
 package com.baconbao.portfolio.model;
 
-import jakarta.persistence.Access;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,4 +19,8 @@ public class Comments {
     private Integer id;
     private String content;
     private LocalDateTime createAt;
+
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_send_id", referencedColumnName = "id")
+    private User userSend;
 }

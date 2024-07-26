@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "profile")
 @Builder
@@ -19,9 +21,27 @@ public class Profile {
     private String education;
     private String workExperience;
     private String skills;
-    private String address;
-    private String contactInfo;
     @OneToOne
-    @JoinColumn(name = "imageID", referencedColumnName = "id")
+    @JoinColumn(name = "idImage", referencedColumnName = "id")
     private Image image;
+
+    @OneToMany
+    @JoinColumn(name = "idProject", referencedColumnName = "id")
+    private List<Project> projects;
+
+    @OneToMany
+    @JoinColumn(name = "idComment", referencedColumnName = "id")
+    private List<Comments> comments;
+
+    @OneToOne
+    @JoinColumn(name = "idContact", referencedColumnName = "id")
+    private Contact contact;
+
+    @OneToOne
+    @JoinColumn(name = "idTypeProfile", referencedColumnName = "id")
+    private TypeProfile typeProfile;
+
+    @OneToMany
+    @JoinColumn(name = "idNotification", referencedColumnName = "id")
+    private List<Notification> notifications;
 }

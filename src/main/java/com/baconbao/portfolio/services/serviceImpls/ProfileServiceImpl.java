@@ -4,16 +4,17 @@ import com.baconbao.portfolio.dto.ProfileDTO;
 import com.baconbao.portfolio.model.Profile;
 import com.baconbao.portfolio.repository.ProfileRepository;
 import com.baconbao.portfolio.services.service.ProfileService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
-
+@Slf4j
 public class ProfileServiceImpl implements ProfileService {
     @Autowired
     private ProfileRepository profileRepository;
@@ -26,8 +27,6 @@ public class ProfileServiceImpl implements ProfileService {
                 .education(profileDTO.getEducation())
                 .workExperience(profileDTO.getWorkExperience())
                 .skills(profileDTO.getSkills())
-                .address(profileDTO.getAddress())
-                .contactInfo(profileDTO.getContactInfo())
                 .id(getGenerationId())
                 .build();
         return profileRepository.save(profile);
@@ -42,6 +41,13 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public ProfileDTO saveProfile(ProfileDTO profileDTO) {
         return convertToDTO(save(profileDTO));
+    }
+
+    @Override
+    public ProfileDTO findById(Integer id) {
+        log.info("Find Profile by id: {}", id);
+        return convertToDTO(profileRepository.findById(id)
+                .orElseThrow());
     }
 
     private ProfileDTO convertToDTO(Profile profile) {

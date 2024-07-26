@@ -28,6 +28,10 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToOne
+    @JoinColumn(name = "idProfile", referencedColumnName = "id")
+    private Profile profile;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));

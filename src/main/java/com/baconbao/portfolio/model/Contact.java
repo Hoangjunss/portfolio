@@ -1,22 +1,21 @@
 package com.baconbao.portfolio.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name ="contact")
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "image")
-public class Image {
+public class Contact {
     @Id
     private Integer id;
-    private String url;
+    private String address;
+    private String phone;
+    private String email;
 }
