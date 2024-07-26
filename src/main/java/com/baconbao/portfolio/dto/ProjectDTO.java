@@ -1,6 +1,6 @@
 package com.baconbao.portfolio.dto;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Builder;
 import lombok.Data;
 

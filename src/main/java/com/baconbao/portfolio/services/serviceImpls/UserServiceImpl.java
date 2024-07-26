@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService
     @Autowired
     private UserRepository userRepository;
 
-    public UserDTO getUserByEmail(String email) {
+    public UserDTO findByEmail(String email) {
         log.info("Get user by email: {}", email);
         Optional<User> user = userRepository.findByEmail(email);
         UserDTO userDTO = UserDTO.builder()
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService
         return userDTO;
     }
 
-    public UserDTO getUserById(Integer id) {
+    public UserDTO findById(Integer id) {
         log.info("Get user by id: {}", id);
         Optional<User> user = userRepository.findById(id);
         UserDTO userDTO = UserDTO.builder()

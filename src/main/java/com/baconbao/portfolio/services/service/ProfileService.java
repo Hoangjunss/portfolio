@@ -1,8 +1,8 @@
 package com.baconbao.portfolio.services.service;
 
-import com.baconbao.portfolio.model.Profile;
+import com.baconbao.portfolio.dto.ProfileDTO;
 
 public interface ProfileService {
-    void updateProfile(Profile updatedProfile);
-    void deleteProfile();
+    ProfileDTO updateProfile(ProfileDTO profileDTO);
+    ProfileDTO saveProfile(ProfileDTO profileDTO);
 }

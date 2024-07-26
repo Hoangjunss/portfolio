@@ -4,7 +4,7 @@ import com.baconbao.portfolio.dto.UserDTO;
 
 
 public interface UserService {
-    UserDTO getUserByEmail(String email);
-    UserDTO getUserById(Integer id);
+    UserDTO findByEmail(String email);
+    UserDTO findById(Integer id);
     UserDTO getCurrentUser();
 }
