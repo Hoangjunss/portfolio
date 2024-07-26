@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -79,8 +78,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public ProfileDTO updateProfile(ProfileDTO profileDTO) {
-        return convertToDTO(profileRepository.save(convertToModel(profileDTO)));
-
+        return convertToDTO(profileRepository.save(convertToModel(profileDTO))); // tại sao không cần findById mà vẫn update được đúng
     }
 
 }
