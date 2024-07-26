@@ -18,4 +18,9 @@ public class ProfileController {
     public ResponseEntity<ProfileDTO> findProfile(@RequestBody ProfileDTO id){
         return ResponseEntity.ok(profileService.findById(id.getId()));
     }
+
+    @PostMapping("/searchbyname")
+    public ResponseEntity<ProfileDTO> findByName(@RequestBody ProfileDTO name){
+        return ResponseEntity.ok(profileService.findByName(name.getName()));
+    }
 }

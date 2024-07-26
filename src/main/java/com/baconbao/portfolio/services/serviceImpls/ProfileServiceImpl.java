@@ -3,6 +3,7 @@ package com.baconbao.portfolio.services.serviceImpls;
 import com.baconbao.portfolio.dto.ProfileDTO;
 import com.baconbao.portfolio.model.Profile;
 import com.baconbao.portfolio.repository.ProfileRepository;
+import com.baconbao.portfolio.repository.UserRepository;
 import com.baconbao.portfolio.services.service.ProfileService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -20,6 +21,10 @@ public class ProfileServiceImpl implements ProfileService {
     private ProfileRepository profileRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private ProfileService profileService;
+    @Autowired
+    private UserRepository userRepository;
 
     private Profile save(ProfileDTO profileDTO) {
         Profile profile = Profile.builder()
@@ -49,6 +54,21 @@ public class ProfileServiceImpl implements ProfileService {
         return convertToDTO(profileRepository.findById(id)
                 .orElseThrow());
     }
+
+    @Override
+    public ProfileDTO findByName(String name) {
+        return convertToDTO(userRepository.findProfileByName(name));
+    }
+//    public ProfileDTO findByName(String name) {
+//        log.info("Find Profile by name: {}", name);
+//        Profile profile = userRepository.findProfileByName(name);
+//        if (profile == null) {
+//            // Ghi log hoặc xử lý trường hợp null
+//            System.out.println("Profile is null for name: " + name);
+//            return null; // Return null if not found in database
+//        }
+//        return convertToDTO(profile);
+//    }
 
     private ProfileDTO convertToDTO(Profile profile) {
         return modelMapper.map(profile, ProfileDTO.class);
