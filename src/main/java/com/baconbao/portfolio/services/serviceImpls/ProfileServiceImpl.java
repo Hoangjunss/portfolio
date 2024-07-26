@@ -1,7 +1,9 @@
 package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.ProfileDTO;
+import com.baconbao.portfolio.dto.ProjectDTO;
 import com.baconbao.portfolio.model.Profile;
+import com.baconbao.portfolio.model.Project;
 import com.baconbao.portfolio.repository.ProfileRepository;
 import com.baconbao.portfolio.services.service.ProfileService;
 import org.modelmapper.ModelMapper;
@@ -47,19 +49,13 @@ public class ProfileServiceImpl implements ProfileService {
     private ProfileDTO convertToDTO(Profile profile) {
         return modelMapper.map(profile, ProfileDTO.class);
     }
+    private Profile convertToModel(ProfileDTO projectDTO) {
+        return modelMapper.map(projectDTO, Profile.class);
+    }
 
     @Override
     public ProfileDTO updateProfile(ProfileDTO profileDTO) {
-        Optional<Profile> profile = profileRepository.findById(1);
-        Profile profileToUpdate = profile.get().builder()
-                    .objective(profileDTO.getObjective())
-                    .education(profileDTO.getEducation())
-                    .workExperience(profileDTO.getWorkExperience())
-                    .skills(profileDTO.getSkills())
-                    .address(profileDTO.getAddress())
-                    .contactInfo(profileDTO.getContactInfo())
-                    .build();
-        return convertToDTO(profileRepository.save(profileToUpdate));
+        return convertToDTO(profileRepository.save(convertToModel(profileDTO)));
 
     }
 
