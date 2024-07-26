@@ -39,8 +39,25 @@ public class ProjectServiceImpl implements ProjectService {
 
         return convertToDTO(save(projectDTO));
     }
+
+    @Override
+    public ProjectDTO updateProject(ProjectDTO projectDTO) {
+         Project project=projectRepository.save(convertToModel(projectDTO));
+
+        return convertToDTO(project);
+    }
+
+    @Override
+    public ProjectDTO findById(ProjectDTO projectDTO) {
+        return convertToDTO(projectRepository.findById(projectDTO.getId())
+                .orElseThrow());
+    }
+
     private ProjectDTO convertToDTO(Project project) {
 
         return modelMapper.map(project, ProjectDTO.class);
+    }
+    private Project convertToModel(ProjectDTO projectDTO) {
+        return modelMapper.map(projectDTO, Project.class);
     }
 }
