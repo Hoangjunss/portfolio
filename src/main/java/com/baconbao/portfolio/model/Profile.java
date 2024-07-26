@@ -1,8 +1,6 @@
 package com.baconbao.portfolio.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,4 +21,7 @@ public class Profile {
     private String skills;
     private String address;
     private String contactInfo;
+    @OneToOne
+    @JoinColumn(name = "imageID", referencedColumnName = "id")
+    private Image image;
 }
