@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class Profile {
     @Id
     private Integer id;
-    private String onjective;
+    private String objective;
     private String education;
     private String workExperience;
     private String skills;
