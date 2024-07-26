@@ -1,9 +1,7 @@
 package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.ProfileDTO;
-import com.baconbao.portfolio.dto.ProjectDTO;
 import com.baconbao.portfolio.model.Profile;
-import com.baconbao.portfolio.model.Project;
 import com.baconbao.portfolio.repository.ProfileRepository;
 import com.baconbao.portfolio.services.service.ProfileService;
 import org.modelmapper.ModelMapper;
@@ -11,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.util.Optional;
+
 import java.util.UUID;
 
 @Service
@@ -49,8 +47,8 @@ public class ProfileServiceImpl implements ProfileService {
     private ProfileDTO convertToDTO(Profile profile) {
         return modelMapper.map(profile, ProfileDTO.class);
     }
-    private Profile convertToModel(ProfileDTO projectDTO) {
-        return modelMapper.map(projectDTO, Profile.class);
+    private Profile convertToModel(ProfileDTO profileDTO) {
+        return modelMapper.map(profileDTO, Profile.class);
     }
 
     @Override
