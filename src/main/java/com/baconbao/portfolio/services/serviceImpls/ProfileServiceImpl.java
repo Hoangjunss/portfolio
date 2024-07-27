@@ -77,14 +77,6 @@ public class ProfileServiceImpl implements ProfileService {
      Profile profile=profileRepository.findById(id).orElseThrow();
      profile.getProjects().add(project);
      profileRepository.save(profile);
-
-    }
-
-    @Override
-    public void updateContactByProfile(Contact contact, Integer id) {
-        Profile profile=profileRepository.findById(id).orElseThrow();
-        profile.setContact(contact);
-        profileRepository.save(profile);
     }
 
 

@@ -1,7 +1,6 @@
 package com.baconbao.portfolio.services.service;
 
 import com.baconbao.portfolio.dto.ProfileDTO;
-import com.baconbao.portfolio.model.Contact;
 import com.baconbao.portfolio.model.Profile;
 import com.baconbao.portfolio.model.Project;
 import com.baconbao.portfolio.model.TypeProfile;
@@ -17,5 +16,4 @@ public interface ProfileService {
      ProfileDTO convertToDTO(Profile profile);
      Profile convertToModel(ProfileDTO profileDTO);
      void updateProjectByProfile(Project project,Integer id);
-    void updateContactByProfile(Contact contact, Integer id);
 }
