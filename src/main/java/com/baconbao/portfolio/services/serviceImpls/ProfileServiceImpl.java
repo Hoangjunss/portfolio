@@ -36,6 +36,7 @@ public class ProfileServiceImpl implements ProfileService {
                 .education(profileDTO.getEducation())
                 .workExperience(profileDTO.getWorkExperience())
                 .skills(profileDTO.getSkills())
+                .typeProfile(TypeProfile.valueOf(profileDTO.getTypeProfile()))
                 .id(getGenerationId())
                 .build();
         return profileRepository.save(profile);

@@ -17,7 +17,7 @@ import java.util.List;
 public class Profile {
     @Id
     private Integer id;
-    private String objective;
+        private String objective;
     private String education;
     private String workExperience;
     private String skills;
