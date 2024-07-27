@@ -26,7 +26,7 @@ public class AppConfig {
                     return null; // or handle this case as per your requirement
                 }
                 try {
-                    return TypeProfile.valueOf(source);
+                    return TypeProfile.valueOf(source.toUpperCase());
                 } catch (IllegalArgumentException e) {
                     throw new RuntimeException("Invalid value for TypeProfile enum: " + source);
                 }
@@ -50,11 +50,21 @@ public class AppConfig {
             }
         };
 
+        // Custom converter from Profile to ProfileDTO for image URL
+        Converter<Profile, String> imageUrlConverter = new Converter<>() {
+            @Override
+            public String convert(MappingContext<Profile, String> context) {
+                Profile source = context.getSource();
+                return source != null && source.getImage() != null ? source.getImage().getUrl() : null;
+            }
+        };
+
         // Define mapping from Profile to ProfileDTO
         modelMapper.addMappings(new PropertyMap<Profile, ProfileDTO>() {
             @Override
             protected void configure() {
                 using(toString).map(source.getTypeProfile()).setTypeProfile(null);
+                using(imageUrlConverter).map(source).setUrl(null);
             }
         });
 

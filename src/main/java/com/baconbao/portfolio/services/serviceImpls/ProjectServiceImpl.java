@@ -6,6 +6,7 @@ import com.baconbao.portfolio.model.Profile;
 import com.baconbao.portfolio.model.Project;
 import com.baconbao.portfolio.model.User;
 import com.baconbao.portfolio.repository.ProjectRepository;
+import com.baconbao.portfolio.services.service.ImageService;
 import com.baconbao.portfolio.services.service.ProfileService;
 import com.baconbao.portfolio.services.service.ProjectService;
 import org.modelmapper.ModelMapper;
@@ -25,6 +26,8 @@ public class ProjectServiceImpl implements ProjectService {
     private ModelMapper modelMapper;
     @Autowired
     private ProfileService profileService;
+    @Autowired
+    private ImageService imageService;
 
     private Project save(ProjectDTO projectDTO) {
         Project project=Project.builder()
@@ -32,6 +35,7 @@ public class ProjectServiceImpl implements ProjectService {
                 .title(projectDTO.getTitle())
                 .description(projectDTO.getDescription())
                 .url(projectDTO.getUrl())
+                .image(imageService.saveImage(projectDTO.getImageFile()))
                 .build();
         return projectRepository.save(project);
     }
