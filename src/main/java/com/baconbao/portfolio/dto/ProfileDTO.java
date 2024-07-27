@@ -22,4 +22,5 @@ public class ProfileDTO {
     private String skills;
     private MultipartFile imageFile;
     private Integer idUser;
+    private  String typeProfile;
 }
