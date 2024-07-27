@@ -2,6 +2,7 @@ package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.ProfileDTO;
 import com.baconbao.portfolio.model.Profile;
+import com.baconbao.portfolio.model.Project;
 import com.baconbao.portfolio.model.TypeProfile;
 import com.baconbao.portfolio.repository.ProfileRepository;
 import com.baconbao.portfolio.repository.UserRepository;
@@ -61,22 +62,21 @@ public class ProfileServiceImpl implements ProfileService {
     public ProfileDTO findByName(String name) {
         return convertToDTO(userRepository.findProfileByName(name));
     }
-//    public ProfileDTO findByName(String name) {
-//        log.info("Find Profile by name: {}", name);
-//        Profile profile = userRepository.findProfileByName(name);
-//        if (profile == null) {
-//            // Ghi log hoặc xử lý trường hợp null
-//            System.out.println("Profile is null for name: " + name);
-//            return null; // Return null if not found in database
-//        }
-//        return convertToDTO(profile);
-//    }
 
-    private ProfileDTO convertToDTO(Profile profile) {
+
+    public ProfileDTO convertToDTO(Profile profile) {
         return modelMapper.map(profile, ProfileDTO.class);
     }
-    private Profile convertToModel(ProfileDTO profileDTO) {
+    public Profile convertToModel(ProfileDTO profileDTO) {
         return modelMapper.map(profileDTO, Profile.class);
+    }
+
+    @Override
+    public void updateProjectByProfile(Project project, Integer id) {
+     Profile profile=profileRepository.findById(id).orElseThrow();
+     profile.getProjects().add(project);
+     profileRepository.save(profile);
+
     }
 
     @Override

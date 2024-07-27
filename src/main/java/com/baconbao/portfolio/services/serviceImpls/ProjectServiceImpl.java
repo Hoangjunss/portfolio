@@ -2,6 +2,7 @@ package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.ProjectDTO;
 import com.baconbao.portfolio.dto.UserDTO;
+import com.baconbao.portfolio.model.Profile;
 import com.baconbao.portfolio.model.Project;
 import com.baconbao.portfolio.model.User;
 import com.baconbao.portfolio.repository.ProjectRepository;
@@ -42,7 +43,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectDTO saveProject(ProjectDTO projectDTO) {
-        return convertToDTO(save(projectDTO));
+        Project project=save(projectDTO);
+        profileService.updateProjectByProfile(project,projectDTO.getIdProfile());
+        return convertToDTO(project);
     }
 
     @Override
@@ -61,8 +64,8 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<ProjectDTO> getAllProjectDTOByProfile(Integer idProfile) {
-
-        return null;
+        Profile profile=profileService.convertToModel(profileService.findById(idProfile));
+        return convertToDTOList(projectRepository.getProjectByProfile(profile));
     }
 
     private ProjectDTO convertToDTO(Project project) {
