@@ -17,5 +17,5 @@ public class ProjectDTO {
     private String description;
     private LocalDateTime createAt;
     private String url;
-    private ImageDTO imageDTO;
+    private Integer idProfile;
 }

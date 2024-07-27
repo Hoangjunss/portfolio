@@ -17,5 +17,6 @@ public class NotificationDTO {
     private LocalDateTime createAt;
     private String url;
     private boolean isRead;
-    private UserDTO userDTOSend;
+    private Integer idProfile;
+    private Integer idUserSend;
 }
