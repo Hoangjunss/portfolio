@@ -17,5 +17,5 @@ public interface ProfileService {
      ProfileDTO convertToDTO(Profile profile);
      Profile convertToModel(ProfileDTO profileDTO);
      void updateProjectByProfile(Project project,Integer id);
-//     void updateContactByProfile(User user, Integer id);
+     void updateContactByProfile(User user, Integer id);
 }
