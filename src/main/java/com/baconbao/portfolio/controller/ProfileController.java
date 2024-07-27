@@ -30,8 +30,8 @@ public class ProfileController {
     }
 
     @PostMapping("/findProfileByType")
-    public ResponseEntity<List<Profile>> findProfilesByType(@RequestBody ProfileDTO typeProfile){
-        return ResponseEntity.ok(profileService.findProfilesByType(TypeProfile.valueOf(typeProfile.getTypeProfile())));
+    public ResponseEntity<List<ProfileDTO>> findProfilesByType(@RequestParam String typeProfile){
+        return ResponseEntity.ok(profileService.findProfilesByType(TypeProfile.valueOf(typeProfile)));
     }
     @PostMapping("/save")
     public ResponseEntity<ProfileDTO> save(@RequestBody ProfileDTO profileDTO){

@@ -10,7 +10,7 @@ public interface ProfileService {
     ProfileDTO saveProfile(ProfileDTO profileDTO);
     ProfileDTO findById(Integer id);
     ProfileDTO findByName(String name);
-    List<Profile> findProfilesByType(TypeProfile typeProfile);
+    List<ProfileDTO> findProfilesByType(TypeProfile typeProfile);
      ProfileDTO convertToDTO(Profile profile);
      Profile convertToModel(ProfileDTO profileDTO);
      void updateProjectByProfile(Project project,Integer id);
