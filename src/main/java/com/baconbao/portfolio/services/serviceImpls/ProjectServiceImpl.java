@@ -64,8 +64,8 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<ProjectDTO> getAllProjectDTOByProfile(Integer idProfile) {
-        Profile profile=profileService.convertToModel(profileService.findById(idProfile));
-        return convertToDTOList(projectRepository.getProjectByProfile(profile));
+
+        return null;
     }
 
     private ProjectDTO convertToDTO(Project project) {
