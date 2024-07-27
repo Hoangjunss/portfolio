@@ -18,12 +18,12 @@ public class ContactServiceImpl implements ContactService {
     private ContactRepository contactRepository;
     @Autowired
     private ProfileService profileService;
-    @Override
-    public ContactDTO saveContact(ContactDTO contactDTO) {
-        Contact contact=save(contactDTO);
-        profileService.updateContactByProfile(contact,contactDTO.getProfileId());
-        return convertToDTO(contact);
-    }
+//    @Override
+//    public ContactDTO saveContact(ContactDTO contactDTO) {
+//        Contact contact=save(contactDTO);
+//        profileService.updateContactByProfile(contact,contactDTO.getProfileId());
+//        return convertToDTO(contact);
+//    }
 
     @Override
     public ContactDTO updateContact(ContactDTO contactDTO) {
