@@ -9,7 +9,6 @@ public interface ProfileService {
     ProfileDTO updateProfile(ProfileDTO profileDTO);
     ProfileDTO saveProfile(ProfileDTO profileDTO);
     ProfileDTO findById(Integer id);
-    ProfileDTO findByName(String name);
     List<ProfileDTO> findProfilesByType(TypeProfile typeProfile);
      ProfileDTO convertToDTO(Profile profile);
      Profile convertToModel(ProfileDTO profileDTO);

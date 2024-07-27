@@ -15,7 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 public class ProfileDTO {
     private Integer id;
-    private String name;
     private String objective;
     private String education;
     private String workExperience;

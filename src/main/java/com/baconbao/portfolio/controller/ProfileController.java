@@ -24,10 +24,7 @@ public class ProfileController {
         return ResponseEntity.ok(profileService.findById(id.getId()));
     }
 
-    @PostMapping("/searchbyname")
-    public ResponseEntity<ProfileDTO> findByName(@RequestBody ProfileDTO name){
-        return ResponseEntity.ok(profileService.findByName(name.getName()));
-    }
+    
 
     @PostMapping("/findProfileByType")
     public ResponseEntity<List<ProfileDTO>> findProfilesByType(@RequestParam String typeProfile){

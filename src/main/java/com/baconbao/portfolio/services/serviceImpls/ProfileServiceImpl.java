@@ -1,7 +1,6 @@
 package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.ProfileDTO;
-import com.baconbao.portfolio.dto.ProjectDTO;
 import com.baconbao.portfolio.model.*;
 import com.baconbao.portfolio.repository.ProfileRepository;
 import com.baconbao.portfolio.repository.UserRepository;
@@ -65,12 +64,6 @@ public class ProfileServiceImpl implements ProfileService {
                 .orElseThrow());
     }
 
-    @Override
-    public ProfileDTO findByName(String name) {
-        return convertToDTO(userRepository.findProfileByName(name));
-    }
-
-
     public ProfileDTO convertToDTO(Profile profile) {
         return modelMapper.map(profile, ProfileDTO.class);
     }
@@ -99,12 +92,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     public List<ProfileDTO> findProfilesByType(TypeProfile typeProfile) {
-        return convertToDTOList( profileRepository.findByTypeProfile(typeProfile));
-    }
-    public List<ProfileDTO> convertToDTOList(List<Profile> profiles) {
-        return profiles.stream()
-                .map(project -> modelMapper.map(project, ProfileDTO.class))
-                .collect(Collectors.toList());
+        return profileRepository.findByTypeProfile(typeProfile);
     }
 
 }
