@@ -14,5 +14,5 @@ public class ContactDTO {
     private String address;
     private String phone;
     private String email;
-    private Integer idContact;
+    private Integer profileId;
 }

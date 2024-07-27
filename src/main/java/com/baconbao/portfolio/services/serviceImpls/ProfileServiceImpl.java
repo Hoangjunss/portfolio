@@ -1,6 +1,7 @@
 package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.ProfileDTO;
+import com.baconbao.portfolio.model.Contact;
 import com.baconbao.portfolio.model.Profile;
 import com.baconbao.portfolio.model.Project;
 import com.baconbao.portfolio.model.TypeProfile;
@@ -78,6 +79,14 @@ public class ProfileServiceImpl implements ProfileService {
      profileRepository.save(profile);
 
     }
+
+    @Override
+    public void updateContactByProfile(Contact contact, Integer id) {
+        Profile profile=profileRepository.findById(id).orElseThrow();
+        profile.setContact(contact);
+        profileRepository.save(profile);
+    }
+
 
     @Override
     public ProfileDTO updateProfile(ProfileDTO profileDTO) {
