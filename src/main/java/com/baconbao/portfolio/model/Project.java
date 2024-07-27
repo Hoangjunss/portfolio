@@ -30,4 +30,8 @@ public class Project {
     @OneToOne
     @JoinColumn(name = "idImage", referencedColumnName = "id")
     private Image image;
+
+    @ManyToOne
+    @JoinColumn(name = "profile_id")
+    private Profile profile;
 }

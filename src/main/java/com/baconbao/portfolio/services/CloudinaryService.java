@@ -1,5 +1,7 @@
 package com.baconbao.portfolio.services;
 
+import com.baconbao.portfolio.exception.CloudinaryException;
+import com.baconbao.portfolio.exception.Error;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
@@ -33,29 +35,44 @@ public class CloudinaryService {
 
     // tai hinh anh len cloud
     public Map upload(MultipartFile multipartFile) throws IOException {
-        log.info("Uploading photo to clound: {}", multipartFile.getOriginalFilename());
-        File file = convert(multipartFile);
-        Map result = cloudinary.uploader().upload(file, ObjectUtils.emptyMap());
-        if (!Files.deleteIfExists(file.toPath())) {
-            log.error("Unable to upload file: {}", file.getAbsolutePath());
-            throw new IOException("Unable to upload temporary file: " + file.getAbsolutePath());
+        try{
+            log.info("Uploading photo to clound: {}", multipartFile.getOriginalFilename());
+            File file = convert(multipartFile);
+            Map result = cloudinary.uploader().upload(file, ObjectUtils.emptyMap());
+            if (!Files.deleteIfExists(file.toPath())) {
+                log.error("Unable to upload file: {}", file.getAbsolutePath());
+                throw new IOException("Unable to upload temporary file: " + file.getAbsolutePath());
+            }
+            return result;
+        }catch (IOException e){
+            log.error("Unable to upload file: {}", e.getMessage());
+            throw new CloudinaryException(Error.UPLOAD_FAILED);
         }
-        return result;
     }
 
     // xoa anh tren cloud
     public Map delete(String id) throws IOException {
-        log.info("Deleting photo from cloud: {}", id);
-        return cloudinary.uploader().destroy(id, ObjectUtils.emptyMap());
+        try {
+            log.info("Deleting photo from cloud: {}", id);
+            return cloudinary.uploader().destroy(id, ObjectUtils.emptyMap());
+        }catch (IOException e){
+            log.error("Unable to delete file: {}", e.getMessage());
+            throw new CloudinaryException(Error.DELETE_FAILED);
+        }
     }
 
     // chuyen anh thanh file
     private File convert(MultipartFile multipartFile) throws IOException {
-        File file = new File(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-        FileOutputStream fo = new FileOutputStream(file);
-        fo.write(multipartFile.getBytes());
-        fo.close();
-        return file;
+        try {
+            File file = new File(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+            FileOutputStream fo = new FileOutputStream(file);
+            fo.write(multipartFile.getBytes());
+            fo.close();
+            return file;
+        }catch (IOException e){
+            log.error("Unable to convert file: {}", e.getMessage());
+            throw new CloudinaryException(Error.CONVERSION_FAILED);
+        }
     }
 
     public String getImageUrl(String publicId) {

@@ -25,12 +25,10 @@ public class Profile {
     @JoinColumn(name = "idImage", referencedColumnName = "id")
     private Image image;
 
-    @OneToMany
-    @JoinColumn(name = "idProject", referencedColumnName = "id")
+    @OneToMany(mappedBy = "profile")
     private List<Project> projects;
 
-    @OneToMany
-    @JoinColumn(name = "idComment", referencedColumnName = "id")
+    @OneToMany(mappedBy = "profile")
     private List<Comments> comments;
 
     @OneToOne
@@ -40,7 +38,6 @@ public class Profile {
    @Enumerated(value =EnumType.STRING)
     private TypeProfile typeProfile;
 
-    @OneToMany
-    @JoinColumn(name = "idNotification", referencedColumnName = "id")
+    @OneToMany(mappedBy = "profile")
     private List<Notification> notifications;
 }
