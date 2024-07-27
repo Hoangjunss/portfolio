@@ -37,8 +37,7 @@ public class Profile {
     @JoinColumn(name = "idContact", referencedColumnName = "id")
     private Contact contact;
 
-    @OneToOne
-    @JoinColumn(name = "idTypeProfile", referencedColumnName = "id")
+   @Enumerated(value =EnumType.STRING)
     private TypeProfile typeProfile;
 
     @OneToMany
