@@ -51,8 +51,9 @@ public class CommentsServiceImpl implements CommentsService {
 
     @Override
     public CommentsDTO saveComment(CommentsDTO commentsDTO) {
-        log.info("Save Comment");
-        return convertCommentsDTO(save(commentsDTO));
+        Comments commments = save(commentsDTO);
+        profileService.updateCommentByProfile(commments,commentsDTO.getIdProfile());
+        return convertCommentsDTO(commments);
     }
 
     @Override

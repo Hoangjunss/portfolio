@@ -17,4 +17,5 @@ public interface ProfileService {
      void updateProjectByProfile(Project project,Integer id);
      void updateContactByProfile(Contact contact, Integer id);
      void updatNotificationByProfile(Notification notification, Integer id);
+     void updateCommentByProfile(Comments comments, Integer id);
 }

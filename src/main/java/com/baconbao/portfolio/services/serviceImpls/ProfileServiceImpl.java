@@ -99,6 +99,13 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
+    public void updateCommentByProfile(Comments comments, Integer id) {
+        Profile profile = profileRepository.findById(id).orElseThrow();
+        profile.getComments().add(comments);
+        profileRepository.save(profile);
+    }
+
+    @Override
     public ProfileDTO findProfileByName(String name) {
         return convertToDTO(profileRepository.findProfileByName(name));
     }
