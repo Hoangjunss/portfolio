@@ -1,10 +1,7 @@
 package com.baconbao.portfolio.services.service;
 
 import com.baconbao.portfolio.dto.ProfileDTO;
-import com.baconbao.portfolio.model.Profile;
-import com.baconbao.portfolio.model.Project;
-import com.baconbao.portfolio.model.TypeProfile;
-import com.baconbao.portfolio.model.User;
+import com.baconbao.portfolio.model.*;
 
 import java.util.List;
 
@@ -17,5 +14,5 @@ public interface ProfileService {
      ProfileDTO convertToDTO(Profile profile);
      Profile convertToModel(ProfileDTO profileDTO);
      void updateProjectByProfile(Project project,Integer id);
-     void updateContactByProfile(User user, Integer id);
+     void updateContactByProfile(Contact contact, Integer id);
 }

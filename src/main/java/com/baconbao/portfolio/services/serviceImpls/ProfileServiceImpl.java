@@ -50,7 +50,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public ProfileDTO saveProfile(ProfileDTO profileDTO) {
         Profile profile = save(profileDTO);
-        userService.updateProfileByUser(profileDTO.getIdUser(),profileDTO.getId());
+        userService.updateProfileByUser(profile, profileDTO.getUserId());
         return convertToDTO(profile);
     }
 
@@ -83,6 +83,12 @@ public class ProfileServiceImpl implements ProfileService {
      profileRepository.save(profile);
     }
 
+    @Override
+    public void updateContactByProfile(Contact contact, Integer id) {
+        Profile profile=profileRepository.findById(id).orElseThrow();
+        profile.setContact(contact);
+        profileRepository.save(profile);
+    }
 
 
     @Override

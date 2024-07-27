@@ -1,6 +1,7 @@
 package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.UserDTO;
+import com.baconbao.portfolio.model.Profile;
 import com.baconbao.portfolio.model.User;
 import com.baconbao.portfolio.repository.ProfileRepository;
 import com.baconbao.portfolio.repository.UserRepository;
@@ -53,9 +54,9 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public void updateProfileByUser(Integer id, Integer idProfile) {
+    public void updateProfileByUser(Profile profile, Integer id) {
         User user = userRepository.findById(id).orElseThrow();
-        user.setProfile(profileRepository.findById(idProfile).orElseThrow());
+        user.setProfile(profile);
         userRepository.save(user);
     }
 
