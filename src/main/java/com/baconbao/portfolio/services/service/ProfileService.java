@@ -16,6 +16,5 @@ public interface ProfileService {
      ProfileDTO findProfileByName(String name);
      void updateProjectByProfile(Project project,Integer id);
      void updateContactByProfile(Contact contact, Integer id);
-     void updatNotificationByProfile(Notification notification, Integer id);
      void updateCommentByProfile(Comments comments, Integer id);
 }

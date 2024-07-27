@@ -19,8 +19,6 @@ public class NotificationServiceImpl implements NotificationService {
     private NotificationRepository notificationRepository;
     @Autowired
     private ModelMapper modelMapper;
-    @Autowired
-    private ProfileService profileService;
 
     private Integer getGenerationId() {
         UUID uuid = UUID.randomUUID();
@@ -49,7 +47,6 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public NotificationDTO saveNotification(NotificationDTO notificationDTO) {
         Notification notification = save(notificationDTO);
-        profileService.updatNotificationByProfile(notification,notificationDTO.getIdProfile());
         return convertToDTO(notification);
     }
 

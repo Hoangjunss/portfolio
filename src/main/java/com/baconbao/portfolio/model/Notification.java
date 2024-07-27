@@ -27,6 +27,6 @@ public class Notification {
     private User userSend;
 
     @ManyToOne
-    @JoinColumn(name = "profile_id")
-    private Profile profile;
+    @JoinColumn(name = "user_id")
+    private User user;
 }
