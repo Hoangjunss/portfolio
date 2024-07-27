@@ -12,6 +12,7 @@ public interface ProfileService {
     List<ProfileDTO> findProfilesByType(TypeProfile typeProfile);
      ProfileDTO convertToDTO(Profile profile);
      Profile convertToModel(ProfileDTO profileDTO);
+     ProfileDTO findProfileByName(String name);
      void updateProjectByProfile(Project project,Integer id);
      void updateContactByProfile(Contact contact, Integer id);
 }

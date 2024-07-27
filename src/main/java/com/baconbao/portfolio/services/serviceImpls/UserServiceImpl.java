@@ -1,5 +1,6 @@
 package com.baconbao.portfolio.services.serviceImpls;
 
+import com.baconbao.portfolio.dto.ProfileDTO;
 import com.baconbao.portfolio.dto.UserDTO;
 import com.baconbao.portfolio.model.Profile;
 import com.baconbao.portfolio.model.User;
@@ -14,7 +15,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -53,6 +56,8 @@ public class UserServiceImpl implements UserService
         return null;
     }
 
+
+
     @Override
     public void updateProfileByUser(Profile profile, Integer id) {
         User user = userRepository.findById(id).orElseThrow();
@@ -63,4 +68,5 @@ public class UserServiceImpl implements UserService
     protected UserDTO convertToDTO(User user) {
          return modelMapper.map(user, UserDTO.class);
     }
+
 }
