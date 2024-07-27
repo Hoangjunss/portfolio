@@ -2,11 +2,16 @@ package com.baconbao.portfolio.controller;
 
 import com.baconbao.portfolio.dto.ProfileDTO;
 import com.baconbao.portfolio.dto.ProjectDTO;
+import com.baconbao.portfolio.model.Profile;
+import com.baconbao.portfolio.model.TypeProfile;
 import com.baconbao.portfolio.services.service.ProfileService;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/profile")
@@ -24,4 +29,8 @@ public class ProfileController {
         return ResponseEntity.ok(profileService.findByName(name.getName()));
     }
 
+    @PostMapping("/findprofilebytype")
+    public ResponseEntity<List<Profile>> findProfilesByType(@RequestBody ProfileDTO typeProfile){
+        return ResponseEntity.ok(profileService.findProfilesByType(TypeProfile.valueOf(typeProfile.getTypeProfile())));
+    }
 }

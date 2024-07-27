@@ -2,6 +2,7 @@ package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.ProfileDTO;
 import com.baconbao.portfolio.model.Profile;
+import com.baconbao.portfolio.model.TypeProfile;
 import com.baconbao.portfolio.repository.ProfileRepository;
 import com.baconbao.portfolio.repository.UserRepository;
 import com.baconbao.portfolio.services.service.ProfileService;
@@ -11,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -78,7 +81,11 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public ProfileDTO updateProfile(ProfileDTO profileDTO) {
-        return convertToDTO(profileRepository.save(convertToModel(profileDTO))); // tại sao không cần findById mà vẫn update được đúng
+        return convertToDTO(profileRepository.save(convertToModel(profileDTO)));
+    }
+
+    public List<Profile> findProfilesByType(TypeProfile typeProfile) {
+        return profileRepository.findByTypeProfile(typeProfile);
     }
 
 }

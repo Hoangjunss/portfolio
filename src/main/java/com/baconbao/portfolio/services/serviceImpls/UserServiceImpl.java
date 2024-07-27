@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService
 
     public UserDTO findById(Integer id) {
         log.info("Get user by id: {}", id);
-
         return convertToDTO(userRepository.findById(id)
                 .orElseThrow());
     }
