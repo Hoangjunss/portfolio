@@ -23,4 +23,5 @@ public class ProfileController {
     public ResponseEntity<ProfileDTO> findByName(@RequestBody ProfileDTO name){
         return ResponseEntity.ok(profileService.findByName(name.getName()));
     }
+
 }

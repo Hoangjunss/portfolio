@@ -9,14 +9,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "type")
-@Builder
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class TypeProfile {
-    @Id
-    private Integer id;
-    private String name;
+
+public enum TypeProfile {
+
+    java,
+    python,
+    php;
 }
