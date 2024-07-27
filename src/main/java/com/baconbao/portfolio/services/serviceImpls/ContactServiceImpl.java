@@ -1,7 +1,9 @@
 package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.ContactDTO;
+import com.baconbao.portfolio.dto.ProfileDTO;
 import com.baconbao.portfolio.model.Contact;
+import com.baconbao.portfolio.model.Profile;
 import com.baconbao.portfolio.repository.ContactRepository;
 import com.baconbao.portfolio.services.service.ContactService;
 import com.baconbao.portfolio.services.service.ProfileService;
@@ -30,6 +32,14 @@ public class ContactServiceImpl implements ContactService {
 
         return convertToDTO(contactRepository.save(convertToModel(contactDTO)));
     }
+
+    @Override
+    public ContactDTO getContactByProfile(Integer id) {
+        Profile profile=profileService.convertToModel(profileService.findById(id));
+
+        return convertToDTO(contactRepository.findByProfile(profile));
+    }
+
     private Contact save(ContactDTO contactDTO){
         Contact contact=Contact.builder()
                 .id(getGenerationId())

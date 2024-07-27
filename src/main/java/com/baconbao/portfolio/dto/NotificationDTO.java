@@ -18,5 +18,4 @@ public class NotificationDTO {
     private String url;
     private boolean isRead;
     private Integer idUser;
-    private Integer idUserSend;
 }

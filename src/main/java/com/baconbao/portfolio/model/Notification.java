@@ -22,11 +22,9 @@ public class Notification {
     private String url;
     private boolean isRead;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne()
     @JoinColumn(name = "user_send_id", referencedColumnName = "id")
     private User userSend;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+
 }

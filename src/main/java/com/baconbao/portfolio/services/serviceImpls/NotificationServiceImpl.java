@@ -5,6 +5,7 @@ import com.baconbao.portfolio.model.Notification;
 import com.baconbao.portfolio.repository.NotificationRepository;
 import com.baconbao.portfolio.services.service.NotificationService;
 import com.baconbao.portfolio.services.service.ProfileService;
+import com.baconbao.portfolio.services.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class NotificationServiceImpl implements NotificationService {
     private NotificationRepository notificationRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private UserService userService;
 
     private Integer getGenerationId() {
         UUID uuid = UUID.randomUUID();
@@ -47,6 +50,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public NotificationDTO saveNotification(NotificationDTO notificationDTO) {
         Notification notification = save(notificationDTO);
+        userService.updateNotificationByUser(notification,notificationDTO.getIdUser());
         return convertToDTO(notification);
     }
 
@@ -61,6 +65,14 @@ public class NotificationServiceImpl implements NotificationService {
         log.info("Find notification by id: {}", id);
         return convertToDTO(notificationRepository.findById(id)
                 .orElseThrow());
+    }
+
+    @Override
+    public NotificationDTO seenNotification(Integer id) {
+        Notification notification =notificationRepository.findById(id).orElseThrow();
+        notification.setRead(true);
+
+        return convertToDTO(notificationRepository.save(notification));
     }
 
 

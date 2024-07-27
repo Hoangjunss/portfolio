@@ -2,6 +2,7 @@ package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.ProfileDTO;
 
+import com.baconbao.portfolio.dto.UserDTO;
 import com.baconbao.portfolio.model.*;
 import com.baconbao.portfolio.repository.ProfileRepository;
 import com.baconbao.portfolio.repository.UserRepository;
@@ -96,6 +97,13 @@ public class ProfileServiceImpl implements ProfileService {
         Profile profile = profileRepository.findById(id).orElseThrow();
         profile.getComments().add(comments);
         profileRepository.save(profile);
+    }
+
+    @Override
+    public ProfileDTO getProfileByUser(Integer id) {
+       User user= userService.convertToModel(userService.findById(id));
+
+        return convertToDTO(profileRepository.findByUser(user));
     }
 
     @Override

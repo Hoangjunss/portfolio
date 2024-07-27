@@ -58,8 +58,8 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectDTO findById(ProjectDTO projectDTO) {
-        return convertToDTO(projectRepository.findById(projectDTO.getId())
+    public ProjectDTO findById(Integer id) {
+        return convertToDTO(projectRepository.findById(id)
                 .orElseThrow());
     }
 
