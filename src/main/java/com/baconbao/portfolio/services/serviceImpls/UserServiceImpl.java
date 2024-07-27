@@ -2,6 +2,7 @@ package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.UserDTO;
 import com.baconbao.portfolio.model.User;
+import com.baconbao.portfolio.repository.ProfileRepository;
 import com.baconbao.portfolio.repository.UserRepository;
 import com.baconbao.portfolio.services.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,8 @@ public class UserServiceImpl implements UserService
     private ModelMapper modelMapper;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ProfileRepository profileRepository;
 
     public UserDTO findByEmail(String email) {
 
@@ -48,6 +51,14 @@ public class UserServiceImpl implements UserService
         }
         return null;
     }
+
+    @Override
+    public void updateProfileByUser(Integer id, Integer idProfile) {
+        User user = userRepository.findById(id).orElseThrow();
+        user.setProfile(profileRepository.findById(idProfile).orElseThrow());
+        userRepository.save(user);
+    }
+
     protected UserDTO convertToDTO(User user) {
          return modelMapper.map(user, UserDTO.class);
     }
