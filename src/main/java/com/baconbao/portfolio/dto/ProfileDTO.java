@@ -26,5 +26,4 @@ public class ProfileDTO {
     private ContactDTO contactDTO;
     private MultipartFile imageFile;
     private String typeProfile;
-    private  String typeProfile;
 }
