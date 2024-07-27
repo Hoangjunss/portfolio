@@ -1,10 +1,7 @@
 package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.ProjectDTO;
-import com.baconbao.portfolio.dto.UserDTO;
-import com.baconbao.portfolio.model.Profile;
 import com.baconbao.portfolio.model.Project;
-import com.baconbao.portfolio.model.User;
 import com.baconbao.portfolio.repository.ProjectRepository;
 import com.baconbao.portfolio.services.service.ImageService;
 import com.baconbao.portfolio.services.service.ProfileService;
@@ -13,7 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;

@@ -1,11 +1,11 @@
 package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.ProfileDTO;
-import com.baconbao.portfolio.dto.ProjectDTO;
-import com.baconbao.portfolio.dto.UserDTO;
+
 import com.baconbao.portfolio.model.*;
 import com.baconbao.portfolio.repository.ProfileRepository;
 import com.baconbao.portfolio.repository.UserRepository;
+import com.baconbao.portfolio.services.service.ImageService;
 import com.baconbao.portfolio.services.service.ProfileService;
 import com.baconbao.portfolio.services.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import javax.xml.stream.events.Comment;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -31,6 +32,8 @@ public class ProfileServiceImpl implements ProfileService {
     private UserRepository userRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ImageService imageService;
 
     private Profile save(ProfileDTO profileDTO) {
         Profile profile = Profile.builder()
@@ -39,6 +42,7 @@ public class ProfileServiceImpl implements ProfileService {
                 .workExperience(profileDTO.getWorkExperience())
                 .skills(profileDTO.getSkills())
                 .typeProfile(TypeProfile.valueOf(profileDTO.getTypeProfile()))
+                .image(imageService.saveImage(profileDTO.getImageFile()))
                 .id(getGenerationId())
                 .build();
         return profileRepository.save(profile);

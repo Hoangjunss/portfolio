@@ -1,17 +1,14 @@
 package com.baconbao.portfolio.services.serviceImpls;
 
-import com.baconbao.portfolio.dto.ImageDTO;
 import com.baconbao.portfolio.model.Image;
 import com.baconbao.portfolio.repository.ImageRepository;
 import com.baconbao.portfolio.services.CloudinaryService;
 import com.baconbao.portfolio.services.service.ImageService;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
 
