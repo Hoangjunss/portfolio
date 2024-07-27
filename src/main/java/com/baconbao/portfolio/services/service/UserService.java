@@ -7,4 +7,5 @@ public interface UserService {
     UserDTO findByEmail(String email);
     UserDTO findById(Integer id);
     UserDTO getCurrentUser();
+    void updateProfileByUser(Integer id, Integer idProfile);
 }

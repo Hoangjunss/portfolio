@@ -1,13 +1,11 @@
 package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.ProfileDTO;
-import com.baconbao.portfolio.model.Contact;
-import com.baconbao.portfolio.model.Profile;
-import com.baconbao.portfolio.model.Project;
-import com.baconbao.portfolio.model.TypeProfile;
+import com.baconbao.portfolio.model.*;
 import com.baconbao.portfolio.repository.ProfileRepository;
 import com.baconbao.portfolio.repository.UserRepository;
 import com.baconbao.portfolio.services.service.ProfileService;
+import com.baconbao.portfolio.services.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +27,8 @@ public class ProfileServiceImpl implements ProfileService {
     private ProfileService profileService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserService userService;
 
     private Profile save(ProfileDTO profileDTO) {
         Profile profile = Profile.builder()
@@ -49,8 +49,12 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public ProfileDTO saveProfile(ProfileDTO profileDTO) {
-        return convertToDTO(save(profileDTO));
+        Profile profile = save(profileDTO);
+        userService.updateProfileByUser(profileDTO.getIdUser(),profileDTO.getId());
+        return convertToDTO(profile);
     }
+
+
 
     @Override
     public ProfileDTO findById(Integer id) {
@@ -78,6 +82,7 @@ public class ProfileServiceImpl implements ProfileService {
      profile.getProjects().add(project);
      profileRepository.save(profile);
     }
+
 
 
     @Override

@@ -4,6 +4,7 @@ import com.baconbao.portfolio.dto.ProfileDTO;
 import com.baconbao.portfolio.model.Profile;
 import com.baconbao.portfolio.model.Project;
 import com.baconbao.portfolio.model.TypeProfile;
+import com.baconbao.portfolio.model.User;
 
 import java.util.List;
 
