@@ -34,7 +34,7 @@ public class CloudinaryService {
     }
 
     // tai hinh anh len cloud
-    public Map upload(MultipartFile multipartFile) throws IOException {
+    public Map upload(MultipartFile multipartFile)  {
         try{
             log.info("Uploading photo to clound: {}", multipartFile.getOriginalFilename());
             File file = convert(multipartFile);

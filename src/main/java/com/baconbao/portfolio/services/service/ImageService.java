@@ -1,10 +1,12 @@
 package com.baconbao.portfolio.services.service;
 
 import com.baconbao.portfolio.dto.ImageDTO;
+import com.baconbao.portfolio.model.Image;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public interface ImageService {
-    ImageDTO findById(Integer id);
-    ImageDTO saveImage(ImageDTO imageDTO);
+
+    Image saveImage(MultipartFile imageFile);
 }
