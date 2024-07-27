@@ -92,6 +92,13 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
+    public void updatNotificationByProfile(Notification notification, Integer id) {
+        Profile profile = profileRepository.findById(id).orElseThrow();
+        profile.getNotifications().add(notification);
+        profileRepository.save(profile);
+    }
+
+    @Override
     public ProfileDTO findProfileByName(String name) {
         return convertToDTO(profileRepository.findProfileByName(name));
     }

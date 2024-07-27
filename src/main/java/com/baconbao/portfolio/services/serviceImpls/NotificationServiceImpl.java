@@ -4,6 +4,7 @@ import com.baconbao.portfolio.dto.NotificationDTO;
 import com.baconbao.portfolio.model.Notification;
 import com.baconbao.portfolio.repository.NotificationRepository;
 import com.baconbao.portfolio.services.service.NotificationService;
+import com.baconbao.portfolio.services.service.ProfileService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public class NotificationServiceImpl implements NotificationService {
     private NotificationRepository notificationRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private ProfileService profileService;
 
     private Integer getGenerationId() {
         UUID uuid = UUID.randomUUID();
@@ -45,8 +48,9 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public NotificationDTO saveNotification(NotificationDTO notificationDTO) {
-        log.info("Save notification");
-        return convertToDTO(save(notificationDTO));
+        Notification notification = save(notificationDTO);
+        profileService.updatNotificationByProfile(notification,notificationDTO.getIdProfile());
+        return convertToDTO(notification);
     }
 
     @Override
