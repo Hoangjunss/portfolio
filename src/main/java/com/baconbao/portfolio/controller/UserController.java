@@ -27,4 +27,6 @@ public class UserController {
     public ResponseEntity<UserDTO> findByEmail(@RequestBody UserDTO email){
         return ResponseEntity.ok(userService.findByEmail(email.getEmail()));
     }
+
+
 }

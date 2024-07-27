@@ -42,7 +42,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectDTO saveProject(ProjectDTO projectDTO) {
-
         return convertToDTO(save(projectDTO));
     }
 
