@@ -20,7 +20,11 @@ public class ProfileDTO {
     private String education;
     private String workExperience;
     private String skills;
+    private ImageDTO imageDTO;
+    private List<CommentsDTO> commentsDTO;
+    private List<ProjectDTO> projectsDTO;
+    private ContactDTO contactDTO;
     private MultipartFile imageFile;
-    private Integer idUser;
+    private String typeProfile;
     private  String typeProfile;
 }
