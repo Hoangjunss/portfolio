@@ -4,6 +4,7 @@ import com.baconbao.portfolio.dto.CommentsDTO;
 import com.baconbao.portfolio.model.Comments;
 import com.baconbao.portfolio.repository.CommentsRepository;
 import com.baconbao.portfolio.services.service.CommentsService;
+import com.baconbao.portfolio.services.service.ProfileService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public class CommentsServiceImpl implements CommentsService {
     private CommentsRepository commentsRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private ProfileService profileService;
 
     private Integer getGenerationId() {
         UUID uuid = UUID.randomUUID();
@@ -34,6 +37,7 @@ public class CommentsServiceImpl implements CommentsService {
                 .id(getGenerationId())
                 .content(commentsDTO.getContent())
                 .createAt(commentsDTO.getCreateAt())
+                .profile(profileService.convertToModel(profileService.findById(commentsDTO.getIdProfile())))
                 .build();
         return commentsRepository.save(comments);
     }
