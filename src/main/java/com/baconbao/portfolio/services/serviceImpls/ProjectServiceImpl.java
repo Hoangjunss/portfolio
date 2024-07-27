@@ -1,6 +1,7 @@
 package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.ProjectDTO;
+import com.baconbao.portfolio.model.Profile;
 import com.baconbao.portfolio.model.Project;
 import com.baconbao.portfolio.repository.ProjectRepository;
 import com.baconbao.portfolio.services.service.ImageService;
@@ -65,8 +66,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<ProjectDTO> getAllProjectDTOByProfile(Integer idProfile) {
-
-        return null;
+        Profile profile=profileService.convertToModel(profileService.findById(idProfile));
+        List<Project> projects=projectRepository.getProjectByProfile(profile);
+        return convertToDTOList(projects);
     }
 
     private ProjectDTO convertToDTO(Project project) {

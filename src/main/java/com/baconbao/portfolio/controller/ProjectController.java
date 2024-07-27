@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/project")
 public class ProjectController {
@@ -20,5 +22,9 @@ public class ProjectController {
     @PostMapping("/update")
     public ResponseEntity<ProjectDTO> update(@RequestBody ProjectDTO projectDTO){
         return ResponseEntity.ok(projectService.updateProject(projectDTO));
+    }
+    @GetMapping("/getByProfile")
+    public ResponseEntity<List<ProjectDTO>> getByProfile(@RequestBody ProjectDTO projectDTO){
+        return ResponseEntity.ok(projectService.getAllProjectDTOByProfile(projectDTO.getIdProfile()));
     }
 }
