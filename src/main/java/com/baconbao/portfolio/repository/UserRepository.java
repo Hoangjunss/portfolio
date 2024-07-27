@@ -12,6 +12,4 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
    Optional<User> findByEmail(String email);
-   @Query("SELECT p FROM Profile p Join User u ON p.id = u.profile.id WHERE u.name = :name")
-   Profile findProfileByName(@Param("name") String name);
 }

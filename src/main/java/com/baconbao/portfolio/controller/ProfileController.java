@@ -24,7 +24,7 @@ public class ProfileController {
         return ResponseEntity.ok(profileService.findById(id.getId()));
     }
 
-    
+
 
     @PostMapping("/findProfileByType")
     public ResponseEntity<List<ProfileDTO>> findProfilesByType(@RequestParam String typeProfile){
@@ -37,5 +37,9 @@ public class ProfileController {
     @PostMapping("/update")
     public ResponseEntity<ProfileDTO> update(@RequestBody ProfileDTO profileDTO){
         return ResponseEntity.ok(profileService.updateProfile(profileDTO));
+    }
+    @PostMapping("/findProfileByName")
+    public ResponseEntity<ProfileDTO> findProfileByName(@RequestParam String name){
+        return ResponseEntity.ok(profileService.findProfileByName(name));
     }
 }
