@@ -66,12 +66,6 @@ public class UserServiceImpl implements UserService
         userRepository.save(user);
     }
 
-    @Override
-    public void updateNotificationByUser(Notification notification, Integer id) {
-        User user=userRepository.findById(id).orElseThrow();
-        user.getNotifications().add(notification);
-        userRepository.save(user);
-    }
 
     @Override
     public UserDTO convertToDTO(User user) {
