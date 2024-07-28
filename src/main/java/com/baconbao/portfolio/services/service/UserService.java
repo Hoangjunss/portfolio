@@ -12,7 +12,6 @@ public interface UserService {
     UserDTO findById(Integer id);
     UserDTO getCurrentUser();
     void updateProfileByUser(Profile profile, Integer id);
-    void updateNotificationByUser(Notification notification, Integer id);
     UserDTO convertToDTO(User user);
     User convertToModel(UserDTO userDTO);
 }

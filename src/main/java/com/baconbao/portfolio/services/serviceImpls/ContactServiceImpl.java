@@ -23,7 +23,7 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public ContactDTO saveContact(ContactDTO contactDTO) {
         Contact contact = save(contactDTO);
-
+        profileService.updateContactByProfile(contact,contactDTO.getProfileId());
         return convertToDTO(contact);
     }
 

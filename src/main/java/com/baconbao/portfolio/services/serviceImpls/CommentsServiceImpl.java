@@ -37,11 +37,12 @@ public class CommentsServiceImpl implements CommentsService {
     private CommentsDTO convertCommentsDTO(Comments comments){ return modelMapper.map(comments, CommentsDTO.class); }
 
     private Comments save(CommentsDTO commentsDTO){
+        Profile profile=profileService.convertToModel(profileService.findById(commentsDTO.getIdProfile()));
         Comments comments = Comments.builder()
                 .id(getGenerationId())
                 .content(commentsDTO.getContent())
                 .createAt(commentsDTO.getCreateAt())
-                .profile(profileService.convertToModel(profileService.findById(commentsDTO.getIdProfile())))
+                .profile(profile)
                 .build();
         return commentsRepository.save(comments);
     }
@@ -56,7 +57,6 @@ public class CommentsServiceImpl implements CommentsService {
     @Override
     public CommentsDTO saveComment(CommentsDTO commentsDTO) {
         Comments commments = save(commentsDTO);
-        profileService.updateCommentByProfile(commments,commentsDTO.getIdProfile());
         return convertCommentsDTO(commments);
     }
 

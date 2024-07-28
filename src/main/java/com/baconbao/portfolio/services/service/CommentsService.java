@@ -12,4 +12,5 @@ public interface CommentsService {
     CommentsDTO saveComment(CommentsDTO commentsDTO);
     CommentsDTO updateComment(CommentsDTO commentsDTO);
     List<CommentsDTO> getCommentByProfile(Integer id);
+    //getcommentbyuser
 }
