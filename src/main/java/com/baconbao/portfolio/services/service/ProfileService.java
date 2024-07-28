@@ -15,8 +15,6 @@ public interface ProfileService {
      ProfileDTO convertToDTO(Profile profile);
      Profile convertToModel(ProfileDTO profileDTO);
      ProfileDTO findProfileByName(String name);
-     void updateProjectByProfile(Project project,Integer id);
      void updateContactByProfile(Contact contact, Integer id);
-     void updateCommentByProfile(Comments comments, Integer id);
      ProfileDTO getProfileByUser(Integer id);
 }

@@ -76,24 +76,11 @@ public class ProfileServiceImpl implements ProfileService {
         return modelMapper.map(profileDTO, Profile.class);
     }
 
-    @Override
-    public void updateProjectByProfile(Project project, Integer id) {
-     Profile profile=profileRepository.findById(id).orElseThrow();
-     profile.getProjects().add(project);
-     profileRepository.save(profile);
-    }
 
     @Override
     public void updateContactByProfile(Contact contact, Integer id) {
         Profile profile=profileRepository.findById(id).orElseThrow();
         profile.setContact(contact);
-        profileRepository.save(profile);
-    }
-
-    @Override
-    public void updateCommentByProfile(Comments comments, Integer id) {
-        Profile profile = profileRepository.findById(id).orElseThrow();
-        profile.getComments().add(comments);
         profileRepository.save(profile);
     }
 
