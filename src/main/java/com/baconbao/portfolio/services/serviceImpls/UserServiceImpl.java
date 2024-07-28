@@ -72,10 +72,12 @@ public class UserServiceImpl implements UserService
         user.getNotifications().add(notification);
         userRepository.save(user);
     }
-@Override
+
+    @Override
     public UserDTO convertToDTO(User user) {
          return modelMapper.map(user, UserDTO.class);
     }
+
     @Override
     public  User convertToModel(UserDTO userDTO){
         return  modelMapper.map(userDTO, User.class);

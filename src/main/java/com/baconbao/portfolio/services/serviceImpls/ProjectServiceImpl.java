@@ -52,8 +52,8 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectDTO updateProject(ProjectDTO projectDTO) {
-        projectDTO.setCreateAt(findById(projectDTO).getCreateAt());
-         Project project=projectRepository.save(convertToModel(projectDTO));
+        projectDTO.setCreateAt(findById(projectDTO.getId()).getCreateAt());
+        Project project=projectRepository.save(convertToModel(projectDTO));
         return convertToDTO(project);
     }
 
