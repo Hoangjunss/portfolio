@@ -2,6 +2,7 @@ package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.NotificationDTO;
 import com.baconbao.portfolio.model.Notification;
+import com.baconbao.portfolio.model.User;
 import com.baconbao.portfolio.repository.NotificationRepository;
 import com.baconbao.portfolio.services.service.NotificationService;
 import com.baconbao.portfolio.services.service.ProfileService;
@@ -38,11 +39,13 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     private Notification save(NotificationDTO notificationDTO){
+        User user=userService.convertToModel(userService.findById(notificationDTO.getIdUser()));
         Notification notification = Notification.builder()
                 .id(getGenerationId())
                 .message(notificationDTO.getMessage())
                 .createAt(notificationDTO.getCreateAt())
                 .isRead(notificationDTO.isRead())
+                .userSend(user)
                 .build();
         return notificationRepository.save(notification);
     }
@@ -50,7 +53,6 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public NotificationDTO saveNotification(NotificationDTO notificationDTO) {
         Notification notification = save(notificationDTO);
-        userService.updateNotificationByUser(notification,notificationDTO.getIdUser());
         return convertToDTO(notification);
     }
 
@@ -71,9 +73,6 @@ public class NotificationServiceImpl implements NotificationService {
     public NotificationDTO seenNotification(Integer id) {
         Notification notification =notificationRepository.findById(id).orElseThrow();
         notification.setRead(true);
-
         return convertToDTO(notificationRepository.save(notification));
     }
-
-
 }

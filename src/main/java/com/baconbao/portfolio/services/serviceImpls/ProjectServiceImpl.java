@@ -28,12 +28,14 @@ public class ProjectServiceImpl implements ProjectService {
     private ImageService imageService;
 
     private Project save(ProjectDTO projectDTO) {
+        Profile profile=profileService.convertToModel(profileService.findById(projectDTO.getIdProfile()));
         Project project=Project.builder()
                 .id(getGenerationId())
                 .title(projectDTO.getTitle())
                 .description(projectDTO.getDescription())
                 .url(projectDTO.getUrl())
                 .image(imageService.saveImage(projectDTO.getImageFile()))
+                .profile(profile)
                 .build();
         return projectRepository.save(project);
     }
@@ -46,13 +48,12 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectDTO saveProject(ProjectDTO projectDTO) {
         Project project=save(projectDTO);
-        profileService.updateProjectByProfile(project,projectDTO.getIdProfile());
         return convertToDTO(project);
     }
 
     @Override
     public ProjectDTO updateProject(ProjectDTO projectDTO) {
-        projectDTO.setCreateAt(findById(projectDTO).getCreateAt());
+        projectDTO.setCreateAt(findById(projectDTO.getId()).getCreateAt());
          Project project=projectRepository.save(convertToModel(projectDTO));
         return convertToDTO(project);
     }
