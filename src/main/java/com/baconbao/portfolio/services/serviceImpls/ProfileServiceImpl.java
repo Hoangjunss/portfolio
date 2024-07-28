@@ -68,8 +68,6 @@ public class ProfileServiceImpl implements ProfileService {
                 .orElseThrow());
     }
 
-
-
     public ProfileDTO convertToDTO(Profile profile) {
         return modelMapper.map(profile, ProfileDTO.class);
     }
