@@ -26,7 +26,7 @@ public class ProfileController {
 
 
 
-    @PostMapping("/findProfileByType")
+    @GetMapping("/findProfileByType")
     public ResponseEntity<List<ProfileDTO>> findProfilesByType(@RequestParam String typeProfile){
         return ResponseEntity.ok(profileService.findProfilesByType(TypeProfile.valueOf(typeProfile)));
     }
@@ -38,8 +38,13 @@ public class ProfileController {
     public ResponseEntity<ProfileDTO> update(@RequestBody ProfileDTO profileDTO){
         return ResponseEntity.ok(profileService.updateProfile(profileDTO));
     }
-    @PostMapping("/findProfileByName")
+    @GetMapping("/findProfileByName")
     public ResponseEntity<ProfileDTO> findProfileByName(@RequestParam String name){
         return ResponseEntity.ok(profileService.findProfileByName(name));
     }
+    @GetMapping("/findProfileByUser")
+    public ResponseEntity<ProfileDTO> findProfileByName(@RequestParam Integer id){
+        return ResponseEntity.ok(profileService.getProfileByUser(id));
+    }
+
 }

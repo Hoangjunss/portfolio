@@ -2,6 +2,7 @@ package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.ProfileDTO;
 import com.baconbao.portfolio.dto.UserDTO;
+import com.baconbao.portfolio.model.Notification;
 import com.baconbao.portfolio.model.Profile;
 import com.baconbao.portfolio.model.User;
 import com.baconbao.portfolio.repository.ProfileRepository;
@@ -65,8 +66,19 @@ public class UserServiceImpl implements UserService
         userRepository.save(user);
     }
 
-    protected UserDTO convertToDTO(User user) {
+    @Override
+    public void updateNotificationByUser(Notification notification, Integer id) {
+        User user=userRepository.findById(id).orElseThrow();
+        user.getNotifications().add(notification);
+        userRepository.save(user);
+    }
+@Override
+    public UserDTO convertToDTO(User user) {
          return modelMapper.map(user, UserDTO.class);
+    }
+    @Override
+    public  User convertToModel(UserDTO userDTO){
+        return  modelMapper.map(userDTO, User.class);
     }
 
 }

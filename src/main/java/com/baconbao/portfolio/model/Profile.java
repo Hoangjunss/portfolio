@@ -37,7 +37,4 @@ public class Profile {
 
    @Enumerated(value =EnumType.STRING)
     private TypeProfile typeProfile;
-
-    @OneToMany(mappedBy = "profile")
-    private List<Notification> notifications;
 }

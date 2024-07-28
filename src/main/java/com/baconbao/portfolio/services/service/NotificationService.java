@@ -10,5 +10,6 @@ public interface NotificationService {
     NotificationDTO saveNotification(NotificationDTO notificationDTO);
     NotificationDTO update(NotificationDTO notificationDTO);
     NotificationDTO findById(Integer id);
+    NotificationDTO seenNotification(Integer id);
 
 }

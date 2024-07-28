@@ -1,7 +1,9 @@
 package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.CommentsDTO;
+import com.baconbao.portfolio.dto.ProfileDTO;
 import com.baconbao.portfolio.model.Comments;
+import com.baconbao.portfolio.model.Profile;
 import com.baconbao.portfolio.repository.CommentsRepository;
 import com.baconbao.portfolio.services.service.CommentsService;
 import com.baconbao.portfolio.services.service.ProfileService;
@@ -10,7 +12,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -60,5 +64,17 @@ public class CommentsServiceImpl implements CommentsService {
     public CommentsDTO updateComment(CommentsDTO commentsDTO) {
         log.info("Update Comment");
         return convertCommentsDTO(commentsRepository.save(convertComments(commentsDTO)));
+    }
+
+    @Override
+    public List<CommentsDTO> getCommentByProfile(Integer id) {
+        Profile profile=profileService.convertToModel(profileService.findById(id));
+
+        return convertListCommentDTO(commentsRepository.findByProfile(profile));
+    }
+    public List<CommentsDTO> convertListCommentDTO(List<Comments> comments){
+        return comments.stream()
+                .map(comment->convertCommentsDTO(comment))
+                .collect(Collectors.toList());
     }
 }

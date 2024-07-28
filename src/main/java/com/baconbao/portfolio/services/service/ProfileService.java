@@ -1,6 +1,7 @@
 package com.baconbao.portfolio.services.service;
 
 import com.baconbao.portfolio.dto.ProfileDTO;
+import com.baconbao.portfolio.dto.UserDTO;
 import com.baconbao.portfolio.model.*;
 
 import javax.xml.stream.events.Comment;
@@ -16,6 +17,6 @@ public interface ProfileService {
      ProfileDTO findProfileByName(String name);
      void updateProjectByProfile(Project project,Integer id);
      void updateContactByProfile(Contact contact, Integer id);
-     void updatNotificationByProfile(Notification notification, Integer id);
      void updateCommentByProfile(Comments comments, Integer id);
+     ProfileDTO getProfileByUser(Integer id);
 }

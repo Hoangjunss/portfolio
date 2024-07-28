@@ -32,6 +32,9 @@ public class User implements UserDetails {
     @JoinColumn(name = "idProfile", referencedColumnName = "id")
     private Profile profile;
 
+    @OneToMany(mappedBy = "user")
+    private List<Notification> notifications;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
