@@ -2,6 +2,8 @@ package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.NotificationDTO;
 import com.baconbao.portfolio.dto.ProjectDTO;
+import com.baconbao.portfolio.exception.CustomException;
+import com.baconbao.portfolio.exception.Error;
 import com.baconbao.portfolio.model.Notification;
 import com.baconbao.portfolio.model.Project;
 import com.baconbao.portfolio.model.User;
@@ -12,6 +14,9 @@ import com.baconbao.portfolio.services.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +35,6 @@ public class NotificationServiceImpl implements NotificationService {
 
     private Integer getGenerationId() {
         UUID uuid = UUID.randomUUID();
-        // Use most significant bits and ensure it's within the integer range
         return (int) (uuid.getMostSignificantBits() & 0xFFFFFFFFL);
     }
 
@@ -43,42 +47,70 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     private Notification save(NotificationDTO notificationDTO){
-        User user=userService.convertToModel(userService.findById(notificationDTO.getIdUser()));
-        Notification notification = Notification.builder()
-                .id(getGenerationId())
-                .message(notificationDTO.getMessage())
-                .createAt(notificationDTO.getCreateAt())
-                .isRead(notificationDTO.isRead())
-                .userSend(user)
-                .build();
-        return notificationRepository.save(notification);
+        try{
+            log.info("Saving notification");
+            User user=userService.convertToModel(userService.findById(notificationDTO.getIdUser()));
+            Notification notification = Notification.builder()
+                    .id(getGenerationId())
+                    .message(notificationDTO.getMessage())
+                    .createAt(notificationDTO.getCreateAt())
+                    .isRead(notificationDTO.isRead())
+                    .userSend(user)
+                    .build();
+            return notificationRepository.save(notification);
+        } catch (DataIntegrityViolationException e){
+            throw new CustomException(Error.NOTIFICATION_UNABLE_TO_SAVE);
+        } catch (DataAccessException e){
+            throw new CustomException(Error.DATABASE_ACCESS_ERROR);
+        }
     }
 
     @Override
     public NotificationDTO saveNotification(NotificationDTO notificationDTO) {
-        Notification notification = save(notificationDTO);
-        return convertToDTO(notification);
+        try {
+            log.info("Save notification");
+            Notification notification = save(notificationDTO);
+            return convertToDTO(notification);
+        } catch (DataIntegrityViolationException e){
+            throw new CustomException(Error.NOTIFICATION_UNABLE_TO_SAVE);
+        } catch (DataAccessException e){
+            throw new CustomException(Error.DATABASE_ACCESS_ERROR);
+        }
     }
 
     @Override
     public NotificationDTO update(NotificationDTO notificationDTO) {
-        log.info("Update notification");
-        return convertToDTO(notificationRepository.save(convertToModel(notificationDTO)));
+        try{
+            log.info("Update notification by id: {}", notificationDTO.getId());
+            return convertToDTO(notificationRepository.save(convertToModel(notificationDTO)));
+        }  catch (DataIntegrityViolationException e){
+            throw new CustomException(Error.NOTIFICATION_UNABLE_TO_UPDATE);
+        } catch (DataAccessException e){
+            throw new CustomException(Error.DATABASE_ACCESS_ERROR);
+        }
     }
 
     @Override
     public NotificationDTO findById(Integer id) {
         log.info("Find notification by id: {}", id);
         return convertToDTO(notificationRepository.findById(id)
-                .orElseThrow());
+                .orElseThrow(()-> new CustomException(Error.NOTIFICATION_NOT_FOUND)));
     }
 
     @Override
     public NotificationDTO seenNotification(Integer id) {
-        Notification notification =notificationRepository.findById(id).orElseThrow();
-        notification.setRead(true);
-        return convertToDTO(notificationRepository.save(notification));
+        try{
+            log.info("Update seen notification by id: {}", id);
+            Notification notification =convertToModel(findById(id));
+            notification.setRead(true);
+            return convertToDTO(notificationRepository.save(notification));
+        }  catch (DataIntegrityViolationException e){
+            throw new CustomException(Error.NOTIFICATION_UNABLE_TO_UPDATE);
+        } catch (DataAccessException e){
+            throw new CustomException(Error.DATABASE_ACCESS_ERROR);
+        }
     }
+
     public List<NotificationDTO> convertToDTOList(List<Notification> notifications) {
         return notifications.stream()
                 .map(notification -> modelMapper.map(notification, NotificationDTO.class))
@@ -87,8 +119,14 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public List<NotificationDTO> getNotificationByUser(Integer idUser) {
-        return convertToDTOList(notificationRepository.findByUserId(idUser));
+        try{
+            log.info("Get notifications by user id: {}", idUser);
+            return convertToDTOList(notificationRepository.findByUserId(idUser));
+        } catch (InvalidDataAccessResourceUsageException e){
+            log.error("Get notifications by user id failed: {}", e.getMessage());
+        } catch (DataAccessException e){
+            throw new CustomException(Error.DATABASE_ACCESS_ERROR);
+        }
+        return null;
     }
-
-
 }

@@ -2,6 +2,8 @@ package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.CommentsDTO;
 import com.baconbao.portfolio.dto.ProfileDTO;
+import com.baconbao.portfolio.exception.CustomException;
+import com.baconbao.portfolio.exception.Error;
 import com.baconbao.portfolio.model.Comments;
 import com.baconbao.portfolio.model.Profile;
 import com.baconbao.portfolio.repository.CommentsRepository;
@@ -10,6 +12,9 @@ import com.baconbao.portfolio.services.service.ProfileService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +33,6 @@ public class CommentsServiceImpl implements CommentsService {
 
     private Integer getGenerationId() {
         UUID uuid = UUID.randomUUID();
-        // Use most significant bits and ensure it's within the integer range
         return (int) (uuid.getMostSignificantBits() & 0xFFFFFFFFL);
     }
 
@@ -51,31 +55,59 @@ public class CommentsServiceImpl implements CommentsService {
     public CommentsDTO findById(Integer id) {
         log.info("Find Comment by id: {}", id);
         return convertCommentsDTO(commentsRepository.findById(id)
-                .orElseThrow());
+                .orElseThrow(()->new CustomException(Error.COMMENT_NOT_FOUND)));
     }
 
     @Override
     public CommentsDTO saveComment(CommentsDTO commentsDTO) {
-        Comments commments = save(commentsDTO);
-        return convertCommentsDTO(commments);
+        try {
+            log.info("Save Comment");
+            Comments commments = save(commentsDTO);
+            return convertCommentsDTO(commments);
+        } catch (DataIntegrityViolationException e){
+            throw new CustomException(Error.COMMENT_UNABLE_TO_SAVE);
+        } catch (DataAccessException e){
+            throw new CustomException(Error.DATABASE_ACCESS_ERROR);
+        }
     }
 
     @Override
     public CommentsDTO updateComment(CommentsDTO commentsDTO) {
-        log.info("Update Comment");
-        return convertCommentsDTO(commentsRepository.save(convertComments(commentsDTO)));
+        try {
+            log.info("Update Comment");
+            return convertCommentsDTO(commentsRepository.save(convertComments(commentsDTO)));
+        } catch (DataIntegrityViolationException e){
+            throw new CustomException(Error.COMMENT_UNABLE_TO_SAVE);
+        } catch (DataAccessException e){
+            throw new CustomException(Error.DATABASE_ACCESS_ERROR);
+        }
     }
 
     @Override
     public List<CommentsDTO> getCommentByProfile(Integer id) {
-        Profile profile=profileService.convertToModel(profileService.findById(id));
-
-        return convertListCommentDTO(commentsRepository.findByProfile(profile));
+        try {
+            log.info("Get Comment by Profile id: {}", id);
+            Profile profile=profileService.convertToModel(profileService.findById(id));
+            return convertListCommentDTO(commentsRepository.findByProfile(profile));
+        } catch (InvalidDataAccessResourceUsageException e){
+            log.error("Get Comment by Profile id failed: {}", e.getMessage());
+        } catch (DataAccessException e){
+            throw new CustomException(Error.DATABASE_ACCESS_ERROR);
+        }
+        return null;
     }
 
     @Override
     public List<CommentsDTO> getCommentByUser(Integer idUser) {
-        return convertListCommentDTO(commentsRepository.findByUserId(idUser));
+        try {
+            log.info("Get comments by user id: {}", idUser);
+            return convertListCommentDTO(commentsRepository.findByUserId(idUser));
+        } catch (InvalidDataAccessResourceUsageException e){
+            log.error("Get Comment by User id failed: {}", e.getMessage());
+        } catch (DataAccessException e){
+            throw new CustomException(Error.DATABASE_ACCESS_ERROR);
+        }
+        return null;
     }
 
     public List<CommentsDTO> convertListCommentDTO(List<Comments> comments){

@@ -2,16 +2,25 @@ package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.ContactDTO;
 import com.baconbao.portfolio.dto.ProfileDTO;
+import com.baconbao.portfolio.exception.CustomException;
+import com.baconbao.portfolio.exception.Error;
 import com.baconbao.portfolio.model.Contact;
 import com.baconbao.portfolio.model.Profile;
 import com.baconbao.portfolio.repository.ContactRepository;
 import com.baconbao.portfolio.services.service.ContactService;
 import com.baconbao.portfolio.services.service.ProfileService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.InvalidDataAccessResourceUsageException;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+@Service
+@Slf4j
 public class ContactServiceImpl implements ContactService {
 
     @Autowired
@@ -22,32 +31,59 @@ public class ContactServiceImpl implements ContactService {
     private ProfileService profileService;
     @Override
     public ContactDTO saveContact(ContactDTO contactDTO) {
-        Contact contact = save(contactDTO);
-        profileService.updateContactByProfile(contact,contactDTO.getProfileId());
-        return convertToDTO(contact);
+        try{
+            log.info("Save contact");
+            Contact contact = save(contactDTO);
+            profileService.updateContactByProfile(contact,contactDTO.getProfileId());
+            return convertToDTO(contact);
+        } catch (DataIntegrityViolationException e){
+            throw new CustomException(Error.CONTACT_UNABLE_TO_SAVE);
+        } catch (DataAccessException e){
+            throw new CustomException(Error.DATABASE_ACCESS_ERROR);
+        }
     }
 
     @Override
     public ContactDTO updateContact(ContactDTO contactDTO) {
-
-        return convertToDTO(contactRepository.save(convertToModel(contactDTO)));
+        try{
+            log.info("Updating contact");
+            return convertToDTO(contactRepository.save(convertToModel(contactDTO)));
+        } catch (DataIntegrityViolationException e){
+            throw new CustomException(Error.CONTACT_UNABLE_TO_UPDATE);
+        } catch (DataAccessException e){
+            throw new CustomException(Error.DATABASE_ACCESS_ERROR);
+        }
     }
 
     @Override
     public ContactDTO getContactByProfile(Integer id) {
-        Profile profile=profileService.convertToModel(profileService.findById(id));
-
-        return convertToDTO(contactRepository.findByProfile(profile));
+        try {
+            log.info("Getting contact by profile id: {}", id);
+            Profile profile=profileService.convertToModel(profileService.findById(id));
+            return convertToDTO(contactRepository.findByProfile(profile));
+        } catch (InvalidDataAccessResourceUsageException e){
+            log.error("Getting contact by profile id failed: {}", e.getMessage());
+        } catch (DataAccessException e){
+            throw new CustomException(Error.DATABASE_ACCESS_ERROR);
+        }
+        return null;
     }
 
     private Contact save(ContactDTO contactDTO){
-        Contact contact=Contact.builder()
-                .id(getGenerationId())
-                .email(contactDTO.getEmail())
-                .phone(contactDTO.getPhone())
-                .address(contactDTO.getAddress())
-                .build();
-        return contactRepository.save(contact);
+        try {
+            log.info("Saving contact");
+            Contact contact=Contact.builder()
+                    .id(getGenerationId())
+                    .email(contactDTO.getEmail())
+                    .phone(contactDTO.getPhone())
+                    .address(contactDTO.getAddress())
+                    .build();
+            return contactRepository.save(contact);
+        } catch (DataIntegrityViolationException e){
+            throw new CustomException(Error.CONTACT_UNABLE_TO_SAVE);
+        } catch (DataAccessException e){
+            throw new CustomException(Error.DATABASE_ACCESS_ERROR);
+        }
     }
     public Integer getGenerationId() {
         UUID uuid = UUID.randomUUID();
