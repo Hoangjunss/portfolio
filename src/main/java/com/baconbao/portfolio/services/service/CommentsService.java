@@ -13,4 +13,5 @@ public interface CommentsService {
     CommentsDTO updateComment(CommentsDTO commentsDTO);
     List<CommentsDTO> getCommentByProfile(Integer id);
     //getcommentbyuser
+    List<CommentsDTO> getCommentByUser(Integer idUser);
 }

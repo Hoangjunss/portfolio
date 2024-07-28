@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface CommentsRepository extends JpaRepository<Comments, Integer> {
     Optional<Comments> findById(Integer integer);
     List<Comments> findByProfile(Profile profile);
+    List<Comments> findByUserId(Integer id);
 }

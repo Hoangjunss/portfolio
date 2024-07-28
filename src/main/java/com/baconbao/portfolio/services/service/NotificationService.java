@@ -4,6 +4,8 @@ import com.baconbao.portfolio.dto.NotificationDTO;
 import com.baconbao.portfolio.model.Notification;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 
 public interface NotificationService {
@@ -12,5 +14,6 @@ public interface NotificationService {
     NotificationDTO findById(Integer id);
     NotificationDTO seenNotification(Integer id);
     //getnotificationbyUser
+    List<NotificationDTO> getNotificationByUser(Integer idUser);
 
 }

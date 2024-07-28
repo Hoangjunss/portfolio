@@ -72,6 +72,12 @@ public class CommentsServiceImpl implements CommentsService {
 
         return convertListCommentDTO(commentsRepository.findByProfile(profile));
     }
+
+    @Override
+    public List<CommentsDTO> getCommentByUser(Integer idUser) {
+        return convertListCommentDTO(commentsRepository.findByUserId(idUser));
+    }
+
     public List<CommentsDTO> convertListCommentDTO(List<Comments> comments){
         return comments.stream()
                 .map(comment->convertCommentsDTO(comment))

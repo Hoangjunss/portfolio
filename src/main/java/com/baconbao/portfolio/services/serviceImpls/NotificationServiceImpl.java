@@ -1,7 +1,9 @@
 package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.NotificationDTO;
+import com.baconbao.portfolio.dto.ProjectDTO;
 import com.baconbao.portfolio.model.Notification;
+import com.baconbao.portfolio.model.Project;
 import com.baconbao.portfolio.model.User;
 import com.baconbao.portfolio.repository.NotificationRepository;
 import com.baconbao.portfolio.services.service.NotificationService;
@@ -12,7 +14,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -75,4 +79,16 @@ public class NotificationServiceImpl implements NotificationService {
         notification.setRead(true);
         return convertToDTO(notificationRepository.save(notification));
     }
+    public List<NotificationDTO> convertToDTOList(List<Notification> notifications) {
+        return notifications.stream()
+                .map(notification -> modelMapper.map(notification, NotificationDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<NotificationDTO> getNotificationByUser(Integer idUser) {
+        return convertToDTOList(notificationRepository.findByUserId(idUser));
+    }
+
+
 }
