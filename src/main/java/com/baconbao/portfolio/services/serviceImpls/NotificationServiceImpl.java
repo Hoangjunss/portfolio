@@ -1,15 +1,12 @@
 package com.baconbao.portfolio.services.serviceImpls;
 
 import com.baconbao.portfolio.dto.NotificationDTO;
-import com.baconbao.portfolio.dto.ProjectDTO;
 import com.baconbao.portfolio.exception.CustomException;
 import com.baconbao.portfolio.exception.Error;
 import com.baconbao.portfolio.model.Notification;
-import com.baconbao.portfolio.model.Project;
 import com.baconbao.portfolio.model.User;
 import com.baconbao.portfolio.repository.NotificationRepository;
 import com.baconbao.portfolio.services.service.NotificationService;
-import com.baconbao.portfolio.services.service.ProfileService;
 import com.baconbao.portfolio.services.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -121,7 +118,7 @@ public class NotificationServiceImpl implements NotificationService {
     public List<NotificationDTO> getNotificationByUser(Integer idUser) {
         try{
             log.info("Get notifications by user id: {}", idUser);
-            return convertToDTOList(notificationRepository.findByUserId(idUser));
+            return convertToDTOList(notificationRepository.findUserSendById(idUser));
         } catch (InvalidDataAccessResourceUsageException e){
             log.error("Get notifications by user id failed: {}", e.getMessage());
         } catch (DataAccessException e){

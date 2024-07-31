@@ -32,7 +32,7 @@ public class User implements UserDetails {
     @JoinColumn(name = "idProfile", referencedColumnName = "id")
     private Profile profile;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "userSend")
     private List<Notification> notifications;
 
     @Override

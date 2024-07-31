@@ -18,4 +18,7 @@ public class Contact {
     private String address;
     private String phone;
     private String email;
+
+    @OneToOne(mappedBy = "contact")
+    private Profile profile;
 }
